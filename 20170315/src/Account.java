@@ -1,37 +1,42 @@
 
 public class Account {
 
-	private double money;
+	private double balance;
 	public final String account;
 	
-	public void credit(double m){
-		money += m;
+	Account(String accountant_,double balance_) {//생성자
+		this.balance=balance_;
+		this.account=accountant_;
 	}
-	public double debit(double d){
-		if(money-d<=0){
-			System.out.printf("Enter withdrawal amount for %s : %f",this.account,d);
-			//System.out.println("there is no money");
-			System.out.printf("subtracting %f from %s balance",d,this.account);
+	
+	public void credit(double money_input) {//입금 메소드
+		balance += money_input;
+	}
+	
+	public double debit(double money_draw) {//출금 메소드
+		if(balance-money_draw<=0) {
+			System.out.printf("Enter withdrawal amount for %s : %f",this.account,money_draw);
 			System.out.println();
 			System.out.printf("Debit amount exceeded account balance.");
 			return -1;
+		}else {
+			System.out.printf("Enter withdrawal amount for %s : %f",this.account,money_draw);
+			System.out.println();
+			System.out.printf("subtracting %f from %s balance",money_draw,this.account);
+			balance-=money_draw;
+			return money_draw;
 		}
-			
-		else{
-			System.out.printf("Enter withdrawal amount for %s : %f",this.account,d);
-			money-=d;
-			return d;
-		}
 	}
-	public void balance(){
-		System.out.printf("%s's balance: %f",this.account,this.money);
-		
+	
+	public void printBalance() {//계좌 출력 메소드
+		System.out.printf("%s balance: %f",this.account,this.balance);
 	}
-	public Account(String account,double money)
-	{
-		this.account = account;
-		this.money = money;
+	
+	public double getBalance() {//잔액 확인 메소드
+		return balance;
 	}
-
-
+	
+	protected void setBalance(double set_Balance) {//잔액 수정 메소드
+		balance=set_Balance;
+	}
 }
