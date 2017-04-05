@@ -3,40 +3,54 @@ public class CheckingAccount extends Account {
 	
 	private double credit_limit;//대출한도
 	private double interest;//예금이자
-	private double interest_loan;//대출이자
+	private double loan_interest;//대출이자
 	
-	CheckingAccount(String accountant_,double balance_,double limit) { //생성자
-		super(accountant_,balance_);
+	public CheckingAccount(double balance,double limit,double interest,double loan_interest) { //생성자
+		super(balance);
 		this.credit_limit=limit;
-		this.interest=0.1;
-		this.interest_loan=0.07;
+		this.interest=interest;
+		this.loan_interest=loan_interest;
+		this.setBalance(balance);
 	}
 	
-	public double debit (double money_draw)
-	{
-		if(money_draw>credit_limit) {
+	public void debit (double money_draw) {
+		if(this.getBalance()+credit_limit<money_draw) {
 			System.out.println("한도초과");
 		} else {
-			
-				if(money_draw>getBalance()) {
-					setBalance(getBalance()-money_draw);
-					return 0;
-				} else {
-					setBalance(getBalance()-money_draw);
-					return 0;
-				}
+			this.setBalance(this.getBalance()-money_draw);
 		}
-		return 0;
 	}
-	public void nextMonth(double balance)
+	public void nextMonth()
 	{
-		balance=getBalance();
-		if(balance>0) {
-			balance *= (1.0+interest);
-			setBalance(balance);
+		if(this.getBalance()>0) {
+			this.setBalance(this.getBalance()*(1+interest));
 		} else {
-			balance *= (1.0+interest_loan);
-			setBalance(balance);
+			this.setBalance(this.getBalance()*(1+loan_interest));
 		}
+	}
+	public boolean isBankrupted()
+	{
+		if(this.getWithdrawableAccount() <= 0){
+			System.out.println("Bankrupted!");
+			return true;
+		}
+		else {
+			return false;
+		}
+			
+	}
+	@Override
+	public double getWithdrawableAccount() {
+		if(this.getBalance()+credit_limit<0) {
+			return 0;
+		}else{
+			return this.getBalance()+credit_limit;
+		}
+	}
+
+	@Override
+	public void passTime(int time) {
+		
+		this.setBalance( this.getBalance() *(Math.pow(1+interest, time)));
 	}
 }

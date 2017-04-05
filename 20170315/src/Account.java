@@ -1,35 +1,25 @@
 
-public class Account {
+public abstract class Account {
+	
+	abstract double getWithdrawableAccount();
+	abstract void passTime(int time);
+	 
 
 	private double balance;
-	public final String account;
 	
-	Account(String accountant_,double balance_) {//생성자
-		this.balance=balance_;
-		this.account=accountant_;
+	
+	Account(double balance) {//생성자
+		this.balance=balance;
 	}
 	
-	public void credit(double money_input) {//입금 메소드
-		balance += money_input;
+
+	public double credit(double money_input) {//입금 메소드
+		return balance += money_input;
 	}
 	
-	public double debit(double money_draw) {//출금 메소드
-		if(balance-money_draw<=0) {
-			System.out.printf("Enter withdrawal amount for %s : %f",this.account,money_draw);
-			System.out.println();
-			System.out.printf("Debit amount exceeded account balance.");
-			return -1;
-		}else {
-			System.out.printf("Enter withdrawal amount for %s : %f",this.account,money_draw);
-			System.out.println();
-			System.out.printf("subtracting %f from %s balance",money_draw,this.account);
-			balance-=money_draw;
-			return money_draw;
-		}
-	}
-	
-	public void printBalance() {//계좌 출력 메소드
-		System.out.printf("%s balance: %f",this.account,this.balance);
+	public void debit(double money_draw) {//출금 메소드
+		if(money_draw > 0 && money_draw <= getWithdrawableAccount())
+			balance = balance - money_draw;
 	}
 	
 	public double getBalance() {//잔액 확인 메소드
