@@ -1,4 +1,4 @@
-public class SavingsAccount extends Account {
+public class SavingsAccount extends Account implements Valuable{
 	
 	private double interest;//복리이자
 	private int totalTerm;
@@ -31,5 +31,20 @@ public class SavingsAccount extends Account {
 			setBalance( getBalance() * (Math.pow(1+interest, time)));
 		}
 		totalTerm +=time;
+	}
+
+	@Override
+	public double EstimateValue(int month) {
+		
+			setBalance( getBalance() * (Math.pow(1+interest, month)));
+		
+		return getBalance();
+	}
+	@Override
+	public String toString()
+	{
+		return String.format("Savingaccount_Balance:%s",getBalance());
+		
+		
 	}
 }

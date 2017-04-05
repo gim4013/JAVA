@@ -1,5 +1,5 @@
 
-public class CheckingAccount extends Account {
+public class CheckingAccount extends Account implements Valuable {
 	
 	private double credit_limit;//대출한도
 	private double interest;//예금이자
@@ -53,4 +53,18 @@ public class CheckingAccount extends Account {
 		
 		this.setBalance( this.getBalance() *(Math.pow(1+interest, time)));
 	}
+	
+	@Override
+	public double EstimateValue(int month) {
+		passTime(month);
+		return getBalance(); 
+	}
+	@Override
+	public String toString()
+	{
+		return String.format("Checkingaccount_Balance:%s",getBalance());
+		
+		
+	}
+	
 }
