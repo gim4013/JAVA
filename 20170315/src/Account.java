@@ -17,9 +17,8 @@ public abstract class Account {
 		return balance += money_input;
 	}
 	
-	public void debit(double money_draw) {//출금 메소드
-		if(money_draw > 0 && money_draw <= getWithdrawableAccount())
-			balance = balance - money_draw;
+	public void debit(double amount) throws Exception {//출금 메소드
+			balance -= amount;
 	}
 	
 	public double getBalance() {//잔액 확인 메소드

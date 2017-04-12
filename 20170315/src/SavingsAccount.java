@@ -8,9 +8,13 @@ public class SavingsAccount extends Account implements Valuable{
 		this.totalTerm = 0;
 	}
 
-	@Override public void debit(double withdraw) {
-		if(withdraw <= getWithdrawableAccount()) {
-			super.debit(withdraw);
+	@Override public void debit(double amount) throws Exception{
+		if(amount<0) {
+			throw new Exception("음수입력!");
+		}else if( amount >getWithdrawableAccount()){
+			throw new Exception("Debit amount exceeded account balance");
+		} else {
+			super.debit(amount);
 		}
 	}
 	@Override public double credit(double money){

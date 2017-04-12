@@ -13,12 +13,14 @@ public class CheckingAccount extends Account implements Valuable {
 		this.setBalance(balance);
 	}
 	
-	public void debit (double money_draw) {
-		if(this.getBalance()+credit_limit<money_draw) {
-			System.out.println("한도초과");
-		} else {
-			this.setBalance(this.getBalance()-money_draw);
-		}
+	public void debit (double amount)throws Exception {
+		
+			if( amount<0)throw new Exception("음수입력!");
+			if(this.getBalance()+credit_limit<amount) {
+				throw new Exception("Debit amount exceeded account balance");
+			} else {
+				this.setBalance(this.getBalance()-amount);
+			}
 	}
 	public void nextMonth()
 	{
